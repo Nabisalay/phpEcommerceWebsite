@@ -1,0 +1,109 @@
+<?php
+include('admin/includes/header.php');
+include('admin/includes/sidebar.php');
+include('admin/includes/topbar.php');
+include('config.php');
+
+if(isset($_POST['addProduct'])) {
+$category = $_POST['category'];
+$stmt = $conn->prepare('SELECT `cname` FROM `category` WHERE cname = ?');
+if($stmt) {
+    $stmt->bind_param('s', $category);
+    if($stmt->execute()) {
+        $stmt->bind_result($cname);
+        $stmt->fetch();
+        $stmt->close();
+        if($cname !== $category) {
+            $insertCat = $conn->prepare('INSERT INTO `category` (cname) Values (?)');
+            if($insertCat) {
+                $stmt->bind_param('s', $category);
+            }
+    }else {
+
+    }
+}
+}
+}
+
+
+
+?>
+
+
+    <div class="container">
+
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+
+            <div class="col-xl-10 col-lg-12 col-md-9">
+                <h2>Add Category</h2>
+                <hr>
+        <form class="user" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="POST">
+            <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <label for="">Category</label>
+                    <input type="text" class="form-control form-control-user" id="exampleFirstName"
+                        placeholder="Enter Category" name="category" required>
+                </div>
+                <div class="col-sm-6">
+                <label for="">Product Description</label>
+                    <input type="text" class="form-control form-control-user" id="exampleLastName"
+                        placeholder="Enter Product Description" name="Description" required>
+                 </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <label for="">Price</label>
+                    <input type="text" class="form-control form-control-user" id="exampleFirstName"
+                        placeholder="Enter Price" name="Price" required>
+                </div>
+                <div class="col-sm-6">
+                <label for="">Warranty</label>
+                    <input type="text" class="form-control form-control-user" id="exampleLastName"
+                        placeholder="Enter Warranty" name="Warranty" required>
+                 </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <label for="">Add Image</label>
+                    <input type="file" class="" id="exampleFirstName"
+                        placeholder="" name="image" >
+                </div>
+                <div class="col-sm-6">
+                <label for="">Image</label>
+                <div class="" >
+                    <img id='selectedImg' src="" alt="" height='70px' width='70px'>
+                </div>
+            </div>
+            </div>
+            <!-- <a class="btn btn-primary btn-user btn-block" name="register">
+                Register Account
+            </a> -->
+            <input type="submit" class="btn btn-primary btn-user btn-block" name="addProduct" >                                
+        </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+<?php
+include('admin/includes/footer.php');
+
+
+?>
